@@ -20,6 +20,21 @@
 Ideal para nuevos estudiantes, visitantes o cualquier persona que quiera orientarse en la UNAL.
 
 ---
+### 📲 Instalación en dispositivo físico
+
+1. **Construye el APK**:  
+   En Android Studio: `Build > Build Bundle(s) / APK(s) > Build APK(s)`  
+   El archivo `app-debug.apk` se generará en `app/build/outputs/apk/debug/`.
+
+2. **Transfiere el APK** a tu teléfono (USB, correo, WhatsApp, etc.).
+
+3. **Instala**:  
+   - En **Android 8.0+**: ve a **Ajustes > Seguridad > Instalar apps desconocidas**, selecciona tu gestor de archivos y activa **Permitir instalación**.  
+   - Abre el archivo APK y sigue las instrucciones.
+
+
+>
+
 
 ## ⚠️ Advertencia crítica: Facturación en Google Cloud
 
@@ -142,31 +157,57 @@ android:value="TU_CLAVE_AQUI" />
 ## ⚠️ Advertencia crítica: Requisito de facturación en Google Maps Platform
 
 > 🔑 **Según la documentación oficial de Google** ([fuente](https://developers.google.com/maps/documentation/android-sdk/get-api-key)):  
-> *“You are financially responsible for charges caused by abuse of unrestricted API keys.”*  
+> *“**You are financially responsible for charges caused by abuse of unrestricted API keys.**”*  
 > **Usted es financieramente responsable de los cargos causados por el abuso de claves API no restringidas.**
 
-### ¿Qué significa esto para tu proyecto?
+### Requisitos obligatorios antes de usar la API
 
-1. **Tarjeta obligatoria**  
-   Para habilitar las APIs necesarias (*Maps SDK for Android* y *Directions API*), **debes asociar una tarjeta de crédito o débito válida** a tu proyecto en [Google Cloud Console](https://console.cloud.google.com/), **incluso durante el desarrollo**.
-
-2. **Plan gratuito disponible**  
-   - ✅ **$200 USD mensuales en créditos gratuitos**  
-   - ✅ **2,500 solicitudes diarias de Directions API**  
-   - ✅ Suficiente para pruebas, desarrollo y uso académico (no comercial)
-
-3. **Riesgo real si no restringes la clave**  
-   Si dejas la clave **sin restricciones**, cualquier persona que la descubra (ej: si se filtra en GitHub) puede usarla y generarte **cargos no deseados**.
+Antes de comenzar a usar el **Maps SDK for Android**, debe tener:  
+✅ Un proyecto en Google Cloud Console  
+✅ Una **cuenta de facturación asociada**  
+✅ El **Maps SDK for Android habilitado**  
+🔹 [Más información: Set up in Cloud Console](https://developers.google.com/maps/documentation/android-sdk/get-api-key#before-you-begin)
 
 ---
 
-### ✅ Pasos obligatorios para evitar cargos
+### ¿Cómo crear y restringir su clave API?
 
-| Paso | Acción | Documentación oficial |
-|------|--------|------------------------|
-| **1** | Restringe la clave a **aplicaciones Android** | [Application restrictions](https://developers.google.com/maps/documentation/android-sdk/get-api-key#restrict_key) |
-| **2** | Ingresa **package name** y **SHA-1** de firma | `./gradlew signingReport` |
-| **3** | Restringe a **solo 2 APIs**: <br> • `Maps SDK for Android` <br> • `Directions API` | [API restrictions](https://developers.google.com/maps/documentation/android-sdk/get-api-key#api_restrictions) |
-| **4** | **Nunca subas tu clave a GitHub** (usa `.gitignore` si usas `local.properties`) | — |
+#### 1. Crear la clave
+- Vaya a **[Google Maps Platform > Credentials](https://console.cloud.google.com/apis/credentials)**  
+- Haga clic en **Create credentials > API key**  
+- Copie la clave generada  
 
-> 📌 **Importante**: El equipo de desarrollo **NO se hace responsable** de cargos generados por malas prácticas de seguridad en la gestión de la API Key.
+> 📌 *“Remember to restrict the API key before using it in production.”*  
+> **Recuerde restringir la clave API antes de usarla en producción.**
+
+#### 2. Restringir la clave (obligatorio)
+En la página de la clave, bajo **Key restrictions**:
+
+- **Application restrictions**  
+  - ✅ Seleccione **Android apps**  
+  - ✅ Haga clic en **+ Add package name and fingerprint**  
+  - Ingrese:  
+    - **Package name**: `com.example.base_datos`  
+    - **SHA-1 fingerprint**: ej. `BB:0D:AC:74:D3:21:E1:43:67:71:9B:62:91:AF:A1:66:6E:44:5D:75`  
+    > 🔍 Obtenga el SHA-1 con: `./gradlew signingReport`
+
+- **API restrictions**  
+  - ✅ Haga clic en **Restrict key**  
+  - ✅ Seleccione:  
+    - **Maps SDK for Android**  
+    - **Directions API** *(requerida para rutas)*  
+
+🔹 [Guía oficial: Restricting API keys](https://developers.google.com/maps/documentation/android-sdk/get-api-key#restricting-api-keys)
+
+---
+
+### Consecuencias de no restringir la clave
+Si la clave se deja **sin restricciones**:
+- Cualquier aplicación puede usarla  
+- Un atacante puede generar miles de solicitudes  
+- **Usted será facturado** por el uso no autorizado  
+- No hay límite automático de gasto por defecto  
+
+> ✅ **Recomendación de Google**:  
+> *“Google strongly recommends that you restrict your API keys by limiting their usage to those only APIs needed for your application.”*  
+> *“Restricting API keys adds security to your application by protecting it from unwarranted requests.”*

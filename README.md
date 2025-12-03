@@ -1,8 +1,11 @@
 # 🗺️ UNAL maps
 *Una aplicación Android para navegar por la Ciudad Universitaria de la Universidad Nacional de Colombia, Sede Bogotá.*
 
-![Mapa UNAL Banner](https://via.placeholder.com/800x200/003366/FFFFFF?text=Mapa+UNAL+-+Navega+con+Confianza)  
-*(Reemplaza este placeholder con una captura real al subir el repo)*
+<img width="324" height="720" alt="image" src="https://github.com/user-attachments/assets/7d0cea98-9c71-4743-ba35-36d417be20e8" />
+
+<img width="324" height="720" alt="image" src="https://github.com/user-attachments/assets/1bd45472-570b-4b6d-8e73-5d8951a7e019" />
+<img width="324" height="720" alt="image" src="https://github.com/user-attachments/assets/574e89d0-3864-4181-8f97-d2d1fe52ae0c" />
+
 
 ---
 
